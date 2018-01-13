@@ -8,3 +8,6 @@ class HomePageView(TemplateView):
 
 class AboutPageView(TemplateView):
     template_name="about.html"
+
+class HeadlinesPageView(TemplateView):
+    template_name="headlines-www.yangste.com.html"

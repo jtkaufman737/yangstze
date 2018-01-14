@@ -3,6 +3,7 @@ import scrapy
 
 class QuotesSpider(scrapy.Spider):
     name = "headlines"
+    start_urls="http://www.yangste.com/"
 
     def start_requests(self):
         urls = [

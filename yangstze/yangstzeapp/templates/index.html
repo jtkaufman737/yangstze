@@ -1,14 +1,93 @@
 <!DOCTYPE html>
 <html>
+<style>
+   img{
+     max-height:15%;
+   }
+
+   p{
+     max-width:50%;
+     margin-left:0px !important;
+     padding-left:70px;
+     text-align:left;
+     /* float:left; */
+   }
+
+</style>
   <head>
     <meta charset="utf-8">
-    <title>yangstze</title>
+    <title>yangste</title>
     <link rel="stylesheet" href="https://unpkg.com/wingcss"/>
   </head>
   <body>
-    <h1>yangstze django | python | news</h1>
-    <h6>brought to you by Joy Kaufman</h6>
-    <a href="/about/">About news</a>
-    <a href="/headlines-www.yangste.com/">Yangste Headlines</a>
+    <div class="mainDiv">
+      <center>
+        <h1>yangste - django | python </h1>
+        <a href="https://imgur.com/hxxTcbW"><img src="https://i.imgur.com/hxxTcbW.png" title="source: imgur.com" style="max-height:200px;"/></a>
+        <a href="https://imgur.com/T6q7rF4"><img src="https://i.imgur.com/T6q7rF4.png" title="source: imgur.com" style="margin-left:2%; max-height:200px;"/></a>
+        <h5>brought to you by Joy Kaufman</h5>
+        <br/><br/>
+        <h4>the premise</h4>
+        <p>The idea being that a python application scrape data from the news site Yangste. This was my first Python application
+          as well as my first scraping application. I was excited by the idea because I'm interested in bots and web crawling in general.</p>
+          <br/>
+          <h4>initial considerations</h4>
+          <p>I decide to use Django for brevity, gambling on a quick learning curve. Lucky for me, Django is easy to pick up. I end up being able
+            to get the site up and running in hour 1 of the handful of hours I'm supposed to take on the task. I like Django and the tagline 'for perfectionists with
+            deadlines' suits it well.</p>
+          <p>I examine a few scraping APIs before settling on Scrapy, which seems to be the more mature and well-documented of the bunch. Initially I'm a
+            little concerned about how to parse the specific author data the challenge requests, since
+            the page is in Chinese. As an interim measure, I decide to enable google translate so that I can recognize different markup content sections
+            and get the site running, then refine my approach to address the language question. </p>
+          <br/>
+          <h4>hello, django</h4>
+        <a href="https://imgur.com/MIueMJn"><img src="https://i.imgur.com/MIueMJn.png" title="source: imgur.com"></a>
+        <p>Since a portion of the challenge included instructions that the app work on a Linux box, and mentioned specific python version family functionality, I am
+          assuming it may be tested by a Thresher.io engineer running it locally. To save any local Python-version headaches, I thought I would host on Heroku.
+          This has the added benefit of being public-facing so that the entire hiring team can look at their leisure.</p>
+        <p>This means I need to swap out the sqlite django default structure for postgresql. (Heroku doesn't play nice with sqlite.) This is no trouble.</p>
+        <p>
+          <a href="https://imgur.com/DGD1qSN"><img src="https://i.imgur.com/DGD1qSN.png" title="source: imgur.com" /></a><br/>
+          <a href="https://imgur.com/q6iga0O"><img src="https://i.imgur.com/q6iga0O.png" title="source: imgur.com" /></a><br/>
+          <a href="https://imgur.com/ZdheKkl"><img src="https://i.imgur.com/ZdheKkl.png" title="source: imgur.com" /></a><br/>
+          <br/>
+          Here, from psql terminal I make a user, create our db, and assign a superuser. Prior to migrating, I swap out the db stuff django had baked in.<br/>
+          <br/><a href="https://imgur.com/HGd8WkI"><img src="https://i.imgur.com/HGd8WkI.png" title="source: imgur.com" /></a><br/>
+          <br/>Then, I need to migrate. <br/><br/>
+          <a href="https://imgur.com/PXhpS8W"><img src="https://i.imgur.com/PXhpS8W.png" title="source: imgur.com" /></a>
+        </p>
+        <br/>
+        <h4>hello, Scrapy</h4>
+        <p> Now it is time for my first web crawler. I first learned about bots, brute force attacks, and scraping in 2015 while working for a cybersecurity startup.
+          I can't believe it hadn't occurred to me to make a crawling app of my own, so I'm having a lot of fun with this code challenge. Thinking the most direct
+          route is often simplest, I get started with Scrapy's own documentation.</p>
+        <p> Making my first spider and running my first scrape surprises me by being quick work.</p>
+        <br/><a href="https://imgur.com/kMxHrT4"><img src="https://i.imgur.com/kMxHrT4.png" title="source: imgur.com" style="max-height:600px"/></a></br>
+        <p>It dumps the scrape into an html file, although not perfectly. Rather than individual articles, nested list items relating to specific news
+          categories get scraped as well.</p><br/>
+          <a href="https://imgur.com/jZYOLKB"><img src="https://i.imgur.com/jZYOLKB.png" title="source: imgur.com" /></a>
+          <br/><br/>
+          <h4>parsing problems</h4>
+          <p>Scrapy documentation next outlines the process for parsing and persisting data. The options for either JSON, something called JSON lines, and csv
+            exports are pretty straightforward. I run into trouble using the xpath and css selectors though. Although I can verify I'm targeting valid
+            classes and using pseudo-selectors correctly, I keep getting empty arrays returned. (Image below, me trawling through devTools finding different class and id
+            combos to try parsing the data)</p><br/>
+            <a href="https://imgur.com/eoWFqAx"><img src="https://i.imgur.com/eoWFqAx.png" title="source: imgur.com" /></a><br/><br/>
+          <p>Being committed, I get the idea into my head that this may have something to do with the Chinese characters being scraped. I won't bore you with
+            too much detail, but I start the process all over again to test that theory. I make another new python-django app, swap out the backend for postgres, and set up a new
+            spider with Scrapy to scrape an English site. (I actually used a data science publication for this, thinking with the type of work Thresher does
+            if would be appropriate.) I did get a little farther parsing english, but it was still imperfect.</p><br/>
+            <a href="https://imgur.com/leMOsQ0"><img src="https://i.imgur.com/leMOsQ0.png" title="source: imgur.com" /></a><br/><br/>
+            <p>What you see above - at least a portion of it - is the parsing as close as I got it to behaving fully. This was in the second application
+              I made using an English site. On the first, I was able to extract the text from the title markup only. And time I drilled down further into the DOM
+              I would get empty-array responses.</p><br/>
+              <a href="https://imgur.com/7gjpQMF"><img src="https://i.imgur.com/7gjpQMF.png" title="source: imgur.com" /></a>
+              <br/><br/>
+            <h4>conclusion</h4>
+            <p> I would have loved a little more time to wrestle with this, but I enjoyed the learning process hugely. I would welome an opportunity to speak with the team if you
+              have any questions about this work. You also can find both python-django apps I ended up making <a href="https://github.com/jtkaufman737/yangstze">here</a> and <a href="https://github.com/jtkaufman737/poorMansYangste">here</a>.
+            <p> I'll also issue a brief shoutout to <a href="http://usewing.ml/">Wing</a>, a nifty little css framework I leaned on here. <a href="https://djangogirls.org/">Djangogirls</a> documentation, which was fabulous,
+              and <a href="https://doc.scrapy.org/en/latest/">Scrapy documentation</a> which I look forward to getting to know better. (I intend to clean up this app and add it to my portfolio.) </p>
+        </div>
   </body>
 </html>
